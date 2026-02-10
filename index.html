@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Kalender</title>
   <style>
-    html,body { height:100%; margin:0; background:#000; }
+    html, body { height:100%; margin:0; background:#000; }
     .container{
       width:100%;
       height:100%;
@@ -22,14 +22,51 @@
       box-shadow:0 6px 30px rgba(0,0,0,0.6);
       display:block;
     }
-    .info{ position:fixed; bottom:8px; left:8px; color:#fff; opacity:0.8; font-size:12px; }
+    .info{
+      position:fixed;
+      bottom:8px;
+      left:8px;
+      color:#fff;
+      opacity:0.8;
+      font-size:12px;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Dateiname: kalender.png (muss im Repo liegen) -->
-    <img src="kalender.png" alt="Kalender" class="kalender-img" />
+    <img id="kalenderImg" src="kalender.png" alt="Kalender" class="kalender-img" />
   </div>
-  <div class="info">Ansicht: Kalender</div>
+  <div class="info" id="infoText">Ansicht: kalender.png</div>
+
+  <script>
+    // Optional: kompletter Seiten-Reload als Absicherung
+    const PAGE_RELOAD_MS = 10 * 60 * 1000; // alle 10 Minuten
+
+    // Bild regelmäßig aktualisieren
+    const IMAGE_REFRESH_MS = 30 * 1000; // alle 30 Sekunden
+
+    const img = document.getElementById("kalenderImg");
+    const info = document.getElementById("infoText");
+    const filename = "kalender.png";
+
+    function cacheBustedUrl(name) {
+      return `${name}?v=${Date.now()}`;
+    }
+
+    function refreshImage() {
+      img.src = cacheBustedUrl(filename);
+      info.textContent = "Ansicht: " + filename;
+    }
+
+    // Start
+    refreshImage();
+    setInterval(refreshImage, IMAGE_REFRESH_MS);
+
+    // Optional: kompletter Reload
+    if (PAGE_RELOAD_MS > 0) {
+      setInterval(() => location.reload(), PAGE_RELOAD_MS);
+    }
+  </script>
 </body>
 </html>
