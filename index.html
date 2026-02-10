@@ -40,10 +40,7 @@
   <div class="info" id="infoText">Ansicht: kalender.png</div>
 
   <script>
-    // Optional: kompletter Seiten-Reload als Absicherung
-    const PAGE_RELOAD_MS = 10 * 60 * 1000; // alle 10 Minuten
-
-    // Bild regelmäßig aktualisieren
+    // Nur Bild aktualisieren (kein location.reload), damit TV-Zoom i.d.R. erhalten bleibt
     const IMAGE_REFRESH_MS = 30 * 1000; // alle 30 Sekunden
 
     const img = document.getElementById("kalenderImg");
@@ -59,14 +56,9 @@
       info.textContent = "Ansicht: " + filename;
     }
 
-    // Start
+    // Start + Intervall
     refreshImage();
     setInterval(refreshImage, IMAGE_REFRESH_MS);
-
-    // Optional: kompletter Reload
-    if (PAGE_RELOAD_MS > 0) {
-      setInterval(() => location.reload(), PAGE_RELOAD_MS);
-    }
   </script>
 </body>
 </html>
